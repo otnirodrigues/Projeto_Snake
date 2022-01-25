@@ -9,8 +9,8 @@ class Apllication():
     def __init__(self):
        pygame.init()
        self.criando_janela()
-       #self.criando_snake()
-       #self.criando_maca()
+       self.criando_snake()
+       self.criando_maca()
        self.game()
 
     def criando_janela(self):
@@ -23,9 +23,9 @@ class Apllication():
         # Setando a posição inicial da snake na matriz
         # Setando o tamanho da Snake
         # Setando a cor da snake
-        snake = [(200,200), (210,200)]
-        snake_skin = pygame.Surface((10, 10))
-        snake_skin.fill((255, 255, 255))
+        self.snake = [(200,200), (210,200)]
+        self.snake_skin = pygame.Surface((10, 10))
+        self.snake_skin.fill((255, 255, 255))
         #snake_direction = self.direcao(self.LEFT)
     
     def criando_maca(self):
@@ -57,11 +57,11 @@ class Apllication():
             # Limpando a tela
             # Protando a maça na matrix
             self.screen.fill((0,0,0))
-            self.screen.blit().criando_maca()
+            self.screen.blit(self.maca, self.maca_pos)
 
             # Atualizando a snake na matriz
             for pos in self.snake:
-                self.screen.blit(pos).criando_snake()
+                self.screen.blit(self.snake_skin, pos)
 
             # Atualiza o display a toda interação do while
             pygame.display.update()
