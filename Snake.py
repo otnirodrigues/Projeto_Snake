@@ -44,8 +44,11 @@ class Apllication():
         # Setando um objeto maça, de tamanho 10x10
         # Setando a cor da Maça
         self.maca = pygame.Surface((10, 10))
+        self.maca2 = pygame.Surface((10, 10))
         self.maca.fill((255, 0, 0))
+        self.maca2.fill((255, 0, 0))
         self.pos_maca = self.setando_maca_grid()
+        self.pos_maca2 = self.setando_maca_grid()
         
     def setando_maca_grid(self):
         # setando uma posição na matriz aleatoriamente, o escopo está dentro de 0 à 590, pois a matriz vai de 0 à 600
@@ -53,6 +56,7 @@ class Apllication():
         x = random.randint(0, 590)
         y = random.randint(0, 590)
         return(x//10 * 10, y//10 * 10)
+    
     
     def colisao(self, c1, c2):
         # Criando um metodo para colisão da snake com a maça
@@ -82,14 +86,14 @@ class Apllication():
         # Definindo os limites da janela, caso ultrapasse, game over
         if self.snake[0][0] == 600 or self.snake[0][1] == 600 or self.snake[0][0] <0 or self.snake[0][1] < 0:
             
-            pygame.init()
+            # Criando a tela de game over, definindo fonte e texto
             screen_over = pygame.display.set_mode((600, 400))
             font = pygame.font.SysFont("comicsansms", 45)
             text = font.render("Game Over", True, (255, 0, 0))           
             pygame.display.set_caption("Snake - Game Over")  
             texto_pos = (300 - text.get_width() // 2, 200 - text.get_height() // 2)
             
-            # Laço para criar um novo display com um uma menssagem de game over
+            # Setando os objetos para o novo display
             while True:  
                 screen_over.fill((255,255,255))  
                 screen_over.blit(text, texto_pos)
@@ -127,17 +131,22 @@ class Apllication():
             self.game_over()
 
             # Tratando a colisão entre snake e maça
-            # Gera uma nova posição para maça
+            # Gera uma nova posição para maça1 e maça2
             if self.colisao(self.snake[0], self.pos_maca):
                 self.pos_maca = self.setando_maca_grid()
                 self.snake.append((0,0))
-                self.cont += 1 
+                self.cont += 1
+            elif self.colisao(self.snake[0], self.pos_maca2):
+                    self.pos_maca2 = self.setando_maca_grid()
+                    self.snake.append((0,0))
+                    self.cont += 1 
             
             # Limpando a tela
             # Protando a maça na matrix
             self.screen.fill((255,255,255))
             self.update_snake_matriz()
             self.screen.blit(self.maca, self.pos_maca)
+            self.screen.blit(self.maca2, self.pos_maca2)
             
 
             # Atualiza o display a toda interação do while
