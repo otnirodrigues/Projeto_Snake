@@ -26,6 +26,7 @@ class Apllication():
         # Criando uma janela de tamanho 600x600, e alterando o nome da janela para 'Snake'
         self.screen = pygame.display.set_mode((600, 600))
         pygame.display.set_caption('Snake')
+        
 
     def criando_snake(self):
         # Setando a posição inicial da snake na matriz
@@ -43,6 +44,7 @@ class Apllication():
     def criando_maca(self):
         # Setando um objeto maça, de tamanho 10x10
         # Setando a cor da Maça
+        # Setando a posição da maça
         self.maca = pygame.Surface((10, 10))
         self.maca2 = pygame.Surface((10, 10))
         self.maca.fill((255, 0, 0))
@@ -51,7 +53,7 @@ class Apllication():
         self.pos_maca2 = self.setando_maca_grid()
         
     def setando_maca_grid(self):
-        # setando uma posição na matriz aleatoriamente, o escopo está dentro de 0 à 590, pois a matriz vai de 0 à 600
+        # Definindo uma posição na matriz aleatoriamente, o escopo está dentro de 0 à 590, pois a matriz vai de 0 à 600
         # Tratando x e y, para que retorne um numero inteiro entre 0 e 590. // divide e arredonda para int
         x = random.randint(0, 590)
         y = random.randint(0, 590)
@@ -104,6 +106,17 @@ class Apllication():
                         pygame.quit()
                 pygame.display.update()
 
+    def pontuacao(self):
+        
+        # Definindo um texto para pontuação
+        font = pygame.font.SysFont("comicsansms", 10)
+        text_pontuacao = font.render("PONTUAÇÃO: {}".format(self.cont), True, (255, 0, 0))  
+        texto_pos = (5, 5)
+        self.screen.blit(text_pontuacao, texto_pos)
+           
+
+
+
     def game(self):
         
         while True:
@@ -135,11 +148,11 @@ class Apllication():
             if self.colisao(self.snake[0], self.pos_maca):
                 self.pos_maca = self.setando_maca_grid()
                 self.snake.append((0,0))
-                self.cont += 1
+                self.cont += 5
             elif self.colisao(self.snake[0], self.pos_maca2):
                     self.pos_maca2 = self.setando_maca_grid()
                     self.snake.append((0,0))
-                    self.cont += 1 
+                    self.cont += 5 
             
             # Limpando a tela
             # Protando a maça na matrix
@@ -147,7 +160,7 @@ class Apllication():
             self.update_snake_matriz()
             self.screen.blit(self.maca, self.pos_maca)
             self.screen.blit(self.maca2, self.pos_maca2)
-            
+            self.pontuacao()
 
             # Atualiza o display a toda interação do while
             pygame.display.update()
