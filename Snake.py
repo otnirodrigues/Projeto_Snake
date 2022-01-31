@@ -33,7 +33,7 @@ class Apllication():
         # Setando a cor da snake
         self.snake = [(200,200), (210,200), (220,200)]
         self.snake_skin = pygame.Surface((10, 10))
-        self.snake_skin.fill((255, 255, 255))
+        self.snake_skin.fill((0, 128, 0))
         
     def update_snake_matriz(self):
         # Atualizando a snake na matriz
@@ -82,15 +82,18 @@ class Apllication():
         # Definindo os limites da janela, caso ultrapasse, game over
         if self.snake[0][0] == 600 or self.snake[0][1] == 600 or self.snake[0][0] <0 or self.snake[0][1] < 0:
             
+            pygame.init()
+            screen_over = pygame.display.set_mode((600, 400))
+            font = pygame.font.SysFont("comicsansms", 45)
+            text = font.render("Game Over", True, (255, 0, 0))           
+            pygame.display.set_caption("Snake - Game Over")  
+            texto_pos = (300 - text.get_width() // 2, 200 - text.get_height() // 2)
+            
             # Laço para criar um novo display com um uma menssagem de game over
             while True:  
-                screen_over = pygame.display.set_mode((600, 400))  
-                font = pygame.font.SysFont("comicsansms", 70)
-                text = font.render("Game Over", True, (0, 128, 0))           
-                pygame.display.set_caption("Snake - Game Over")         
-                screen_over.blit(text, (300 - text.get_width() // 2, 200 - text.get_height() // 2))
-                screen_over.fill((255,255,255))        
-                self.clock.tick(15)
+                screen_over.fill((255,255,255))  
+                screen_over.blit(text, texto_pos)
+                self.clock.tick(60)
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -132,9 +135,10 @@ class Apllication():
             
             # Limpando a tela
             # Protando a maça na matrix
-            self.screen.fill((0,0,0))
+            self.screen.fill((255,255,255))
             self.update_snake_matriz()
             self.screen.blit(self.maca, self.pos_maca)
+            
 
             # Atualiza o display a toda interação do while
             pygame.display.update()
